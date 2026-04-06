@@ -3,8 +3,7 @@ pipeline {
     
     environment {
         DOCKER_CREDS = credentials('dockerhub-creds')
-        // REPLACE 'your-username' with your actual Docker Hub username below
-        REGISTRY = "your-username/java-hi-app"
+        REGISTRY = "rakshaa21/java-hi-app"
     }
     
     stages {
