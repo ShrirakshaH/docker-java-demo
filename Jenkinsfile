@@ -15,23 +15,23 @@ pipeline {
         
         stage('Build Docker Image') {
             steps {
-                // Changed 'sh' to 'bat' for Windows
                 bat "docker build -t %REGISTRY%:latest ."
             }
         }
         
         stage('Push to Docker Hub') {
             steps {
-                // Windows login syntax using Batch variables
+                // This uses the credentials we updated to 'rakshaa21'
                 bat "echo %DOCKER_CREDS_PSW% | docker login -u %DOCKER_CREDS_USR% --password-stdin"
                 bat "docker push %REGISTRY%:latest"
             }
         }
     }
     
+    // Ensure this 'post' block is BEFORE the final closing brace of the pipeline
     post {
         always {
-            // Cleanup local image
+            // This needs the 'node' context to run 'bat'
             bat "docker rmi %REGISTRY%:latest || exit 0"
         }
     }
